@@ -1,7 +1,6 @@
 class MpesasController < ApplicationController
   require "rest-client"
-
-  # stkpush
+  #Defined our STK Push
   def stkpush
     phoneNumber = params[:phoneNumber]
     amount = params[:amount]
@@ -48,7 +47,7 @@ class MpesasController < ApplicationController
     render json: response
   end
 
-  # stkquery
+  #Stk query Request
 
   def stkquery
     url = "https://sandbox.safaricom.co.ke/mpesa/stkpushquery/v1/query"
@@ -87,8 +86,10 @@ class MpesasController < ApplicationController
     render json: response
   end
 
+  #Generate and get Access token from the Authorized API.
   private
 
+  #Generate
   def generate_access_token_request
     @url = "https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials"
     @consumer_key = ENV["MPESA_CONSUMER_KEY"]
@@ -103,6 +104,7 @@ class MpesasController < ApplicationController
     res
   end
 
+  #Access token
   def get_access_token
     res = generate_access_token_request()
     if res.code != 200
